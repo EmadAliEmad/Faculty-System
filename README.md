@@ -1,4 +1,4 @@
-# Faculty-System Using Kafka and Docker 
+# Faculty-System Using Kafka, Docker and Running on Postman 
 # Project Title
 Faculty System for dealing with faculty activities ('Add Courses , Drop Courses , Add Students, Delete Students, Update..., etc')
 
