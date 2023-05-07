@@ -1,0 +1,34 @@
+
+1) docker-compose -f dockercompose.yml up -d
+to create kafka&zookeeper container
+
+2) docker exec -it kafka /opt/kafka_2.12-2.3.0/bin/kafka-topics.sh --create --bootstrap-server kafka:9092 --replication-factor 1 --partitions 1 --topic coursesTopic
+to create the topic of the producer and consumer in the kafka container
+
+3) docker exec -it kafka /opt/kafka_2.12-2.3.0/bin/kafka-topics.sh --list --bootstrap-server kafka:9092
+to check that the topic is created
+=>coursesTopic
+
+4) docker container run --name facultyDb --network=faculty-net -e MYSQL_ROOT_PASSWORD=12345 -e MYSQL_DATABASE=coursesDb -d -p 3306:3306 mysql:5.7
+=>Database container
+-Producer Dockerize
+5) docker image build -t adminimage .
+=>producerImage
+6) docker container run --network faculty-net --name admin -d -p 8080:8080 adminimage
+=>producerContainer 
+
+-InstructorDockerize
+7) docker image build -t instructorimage .
+=>ConsumerImage
+8) docker container run --network faculty-net --name instructor -d -p 8081:8081 instructorimage
+=>ConsumerContainer
+
+-DBCommands
+\\in powershell if i want to access mysql container through powershell 
+9) docker container exec -it facultyDb bash 
+\\i can go to the Db container in Docker and go through terminal and i can push these  sql commands directly
+mysql -uroot -p12345
+show databases;
+use coursesDb;
+show tables;
+select * from courses;
